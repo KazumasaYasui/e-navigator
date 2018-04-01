@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        name: 名前
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        email: Eメール
+        remember_me: 次回から自動的にログイン
+  enums:
+    user:
+      sex:
+        male: 男性
+        female: 女性
+        other: その他
