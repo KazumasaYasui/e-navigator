@@ -1,0 +1,43 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <div>
+      <p>Eメール</p>
+      <%= f.text_field :email, value: current_user.email %>
+    </div>
+    <div>
+      <p>名前</p>
+      <%= f.text_field :name, value: current_user.name %>
+    </div>
+    <div>
+      <p>誕生日</p>
+      <%= f.date_select(
+        :birth,
+        start_year: 1988,
+        end_year:   (Time.now.year - 18),
+        default:    Date.new(1988, 1, 1)) %>
+    </div>
+    <div>
+      <p>性別</p>
+      <%= f.select :sex,
+          User.sexes_i18n.keys.
+          map{|k| [User.sexes_i18n[k], k]},
+          {prompt: '選択してください'} %>
+    </div>
+    <div>
+      <p>学校名</p>
+      <%= f.text_field :school_name %>
+    </div>
+    <div>
+      <%= f.submit %>
+    </div>
+  </div>
+<% end %>
