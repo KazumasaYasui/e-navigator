@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: [:edit, :update, :correct_user]
+  before_action :set_user, only: [:edit, :update]
   before_action :correct_user, only: [:edit, :update]
   def index
   end
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to edit_user_path, alert: '更新しました。'
     else
-    render :edit
+      render :edit
     end
   end
 
@@ -31,7 +31,6 @@ class UsersController < ApplicationController
   end
 
   def correct_user
-    # @user = User.find(params[:id])
     if current_user.id != @user.id
       redirect_to root_path
     end
