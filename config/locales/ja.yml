@@ -15,6 +15,6 @@ ja:
         other: その他
     interview:
       interview_status:
-        on_hold: 保留
+        pending: 保留
         approval: 承認
         refusal: 拒否
