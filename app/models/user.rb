@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :interviews
+  has_many :interviews, dependent: :destroy
 
   enum sex: { male:0, female:1, other:2 }
 end
