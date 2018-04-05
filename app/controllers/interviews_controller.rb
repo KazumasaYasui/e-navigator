@@ -5,7 +5,7 @@ class InterviewsController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
 
   def index
-    @interviews = Interview.all.order(created_at: :desc)
+    @interviews = Interview.where(user_id: current_user.id).order(created_at: :desc)
   end
 
   def show
