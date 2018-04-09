@@ -1,0 +1,20 @@
+<%= form_for [@user, @interview] do |f| %>
+  <% if @interview.errors.any? %>
+    <div>
+      <ul>
+        <% @interview.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <div>
+      <p>開始時間</p>
+      <%= f.datetime_select :interview_datetime, :use_month_numbers => true %>
+    </div>
+    <div>
+      <%= f.submit %>
+    </div>
+  </div>
+<% end %>
