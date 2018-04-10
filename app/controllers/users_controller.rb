@@ -3,6 +3,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update]
   before_action :correct_user, only: [:edit, :update]
   def index
+    @users = User.where.not(id: current_user.id).order(created_at: :desc)
+    # binding.pry
   end
 
   def show
