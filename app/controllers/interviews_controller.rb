@@ -2,10 +2,12 @@ class InterviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_current_user, only: [:new, :create, :edit, :update]
   before_action :set_interview, only: [:show, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update]
 
   def index
-    @interviews = Interview.where(user_id: current_user.id).order(created_at: :desc)
+    @current_user_interviews = Interview.where(user_id: current_user.id).order(created_at: :desc)
+    @user = User.find(params[:user_id])
+    @interviews = Interview.where(user_id: @user.id)
+    # binding.pry
   end
 
   def show
@@ -19,7 +21,7 @@ class InterviewsController < ApplicationController
     @interview = Interview.new(interview_params)
     @interview.user_id = current_user.id
     if @interview.save
-      redirect_to user_interview_path(@user, @interview), alert: '作成しました。'
+      redirect_to user_interview_path(@current_user, @interview), alert: '作成しました。'
     else
       render :new
     end
@@ -29,8 +31,12 @@ class InterviewsController < ApplicationController
   end
 
   def update
+    # binding.pry
+    @user = User.find(params[:user_id])
+    @interviews = Interview.where(user_id: @user.id)
+    @interviews.where(interview_status: "approval").update_all(interview_status: "refusal")
     if @interview.update(interview_params)
-      redirect_to user_interview_path(@user, @interview), alert: '更新しました。'
+      redirect_to user_interview_path(@current_user, @interview), alert: '更新しました。'
     else
       render :edit
     end
@@ -44,7 +50,7 @@ class InterviewsController < ApplicationController
   private
 
   def set_current_user
-    @user = User.find(current_user.id)
+    @current_user = User.find(current_user.id)
   end
 
   def set_interview
@@ -53,12 +59,6 @@ class InterviewsController < ApplicationController
 
   def interview_params
     params.require(:interview)
-    .permit(:interview_datetime, :is_available, :user_id)
-  end
-
-  def correct_user
-    if current_user.id != @interview.user_id
-      redirect_to root_path
-    end
+    .permit(:interview_datetime, :interview_status, :user_id)
   end
 end
