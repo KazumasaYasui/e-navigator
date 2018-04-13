@@ -9,6 +9,7 @@ class InterviewsController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:user_id])
   end
 
   def new
@@ -30,9 +31,9 @@ class InterviewsController < ApplicationController
 
   def update
     @user = User.find(params[:user_id])
-    @user.interviews.where(interview_status: "approval").update_all(interview_status: "refusal")
+    @user.interviews.approval.update_all(interview_status: "refusal")
     if @interview.update(interview_params)
-      redirect_to user_interview_path(current_user, @interview), alert: '更新しました。'
+      redirect_to user_interview_path(@user, @interview), alert: '更新しました。'
     else
       render :edit
     end
