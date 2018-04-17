@@ -29,7 +29,7 @@
   <% else %>
     <p>面接は設定されていません。</p>
   <% end %>
-  <% @interviews.where.not(interview_status: "approval").each do |interview| %>
+  <% @interviews_except_approval.each do |interview| %>
     <%= form_for [@user, interview] do |f| %>
       <div>
         <%= f.hidden_field :interview_status, value: "approval" %>
