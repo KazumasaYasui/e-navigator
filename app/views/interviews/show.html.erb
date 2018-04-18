@@ -1,3 +1,3 @@
 <p>面接開始時間：<%= @interview.interview_datetime.strftime("%Y年%m月%d日 %H時%M分") %></p>
 <p>承認状態：<%= @interview.interview_status_i18n %></p>
-<p><%= link_to '一覧へ', user_interviews_path(current_user) %></p>
+<p><%= link_to '一覧へ', user_interviews_path(@user) %></p>
