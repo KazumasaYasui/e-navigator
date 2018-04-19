@@ -43,6 +43,12 @@ class InterviewsController < ApplicationController
     redirect_to user_interviews_path, alert: '削除しました。'
   end
 
+  def apply
+    interviewer = User.find(params[:interviewer_id])
+    RequestMailer.send_when_request(interviewer, current_user).deliver
+    redirect_to user_interviews_path, alert: '申請が完了しました！'
+  end
+
   private
 
   def set_user

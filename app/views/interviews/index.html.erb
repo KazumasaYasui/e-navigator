@@ -20,6 +20,12 @@
       <% end %>
     </tbody>
   </table>
+  <div>
+    <%= form_tag({ controller: :interviews, action: :apply }, { method: :post }) do %>
+      <%= select_tag :interviewer_id, options_for_select(User.where.not(id: current_user.id).pluck(:email, :id)) %>
+      <%= submit_tag '申請' %>
+    <% end %>
+  </div>
   <div><%= link_to '新規作成', new_user_interview_path %></div>
 <% else %>
   <h1><%= @user.name %>さんの面接一覧</h1>

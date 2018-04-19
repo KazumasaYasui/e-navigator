@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'users/index'
-
-  get 'users/show'
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -10,6 +7,7 @@ Rails.application.routes.draw do
   }
   resources :users, only:[:index, :show, :edit, :update] do
     resources :interviews
+    post 'interviews/apply'
   end
   root to: 'users#index'
 end
