@@ -32,6 +32,9 @@ class InterviewsController < ApplicationController
   def update
     @user.interviews.approval.update_all(interview_status: "refusal")
     if @interview.update(interview_params)
+      if @user.interviews.approval.present?
+        CompleteMailer.send_when_complete(@user, current_user).deliver
+      end
       redirect_to user_interview_path(@user, @interview), alert: '更新しました。'
     else
       render :edit
