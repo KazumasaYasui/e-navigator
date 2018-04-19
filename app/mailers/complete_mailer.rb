@@ -1,6 +1,6 @@
 class CompleteMailer < ApplicationMailer
 
-  default from: "test.mail.sample321@gmail.com"
+  default from: ENV['E_MAIL']
   def send_when_complete(user, current_user)
     @user = user
     @interviewer = current_user

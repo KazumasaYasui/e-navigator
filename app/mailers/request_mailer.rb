@@ -1,6 +1,6 @@
 class RequestMailer < ApplicationMailer
 
-  default from: "test.mail.sample321@gmail.com"
+  default from: ENV['E_MAIL']
   def send_when_request(interviewer, current_user)
     @interviewer = interviewer
     @user = current_user
