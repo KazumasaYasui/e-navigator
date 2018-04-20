@@ -1,6 +1,5 @@
 class InterviewMailer < ApplicationMailer
 
-  default from: ENV['E_MAIL']
   def apply(interviewer, interviewee)
     @interviewer = interviewer
     @interviewee = interviewee
