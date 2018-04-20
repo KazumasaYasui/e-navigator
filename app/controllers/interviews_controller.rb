@@ -33,7 +33,7 @@ class InterviewsController < ApplicationController
     @user.interviews.approval.update_all(interview_status: "refusal")
     if @interview.update(interview_params)
       if @user.interviews.approval.present?
-        CompleteMailer.send_when_complete(@user, current_user).deliver
+        InterviewMailer.decide(@user, current_user).deliver
       end
       redirect_to user_interview_path(@user, @interview), alert: '更新しました。'
     else
@@ -48,7 +48,7 @@ class InterviewsController < ApplicationController
 
   def apply
     interviewer = User.find(params[:interviewer_id])
-    RequestMailer.send_when_request(interviewer, current_user).deliver
+    InterviewMailer.apply(interviewer, current_user).deliver
     redirect_to user_interviews_path, alert: '申請が完了しました！'
   end
 
