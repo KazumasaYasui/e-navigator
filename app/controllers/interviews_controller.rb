@@ -32,6 +32,9 @@ class InterviewsController < ApplicationController
   def update
     @user.interviews.approval.update_all(interview_status: "refusal")
     if @interview.update(interview_params)
+      if @user.interviews.approval.present?
+        InterviewMailer.decide(@user, current_user).deliver
+      end
       redirect_to user_interview_path(@user, @interview), alert: '更新しました。'
     else
       render :edit
@@ -41,6 +44,12 @@ class InterviewsController < ApplicationController
   def destroy
     @interview.destroy
     redirect_to user_interviews_path, alert: '削除しました。'
+  end
+
+  def apply
+    interviewer = User.find(params[:interviewer_id])
+    InterviewMailer.apply(interviewer, current_user).deliver
+    redirect_to user_interviews_path, alert: '申請が完了しました！'
   end
 
   private
